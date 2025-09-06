@@ -1,0 +1,154 @@
+import * as React from 'react';
+import { View, useWindowDimensions, Text, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
+
+import MySearchBar from './component/MySearchBar'; // Assurez-vous que le chemin est correct
+import { Icon } from 'react-native-elements'; // Assurez-vous d'avoir installé react-native-elements
+
+
+const CurrentlyRoute = ({ position }: { position: string }) => (
+  <View style={styles.tabBackground}>
+    <Text style={styles.tabText}>Currently</Text>
+    <Text style={styles.tabText}>{position}</Text>
+  </View>
+);
+
+const TodayRoute = ({ position }: { position: string }) => (
+  <View style={styles.tabBackground}>
+    <Text style={styles.tabText}>Today</Text>
+    <Text style={styles.tabText}>{position}</Text>
+  </View>
+);
+
+const WeeklyRoute = ({ position }: { position: string }) => (
+  <View style={styles.tabBackground}>
+    <Text style={styles.tabText}>Weekly</Text>
+    <Text style={styles.tabText}>{position}</Text>
+  </View>
+);
+
+const renderScene = SceneMap({
+  currently: CurrentlyRoute,
+  today: TodayRoute,
+  weekly: WeeklyRoute,
+});
+
+const routes = [
+  { key: 'currently', title: 'Currently', icon: '🌡️' },
+  { key: 'today', title: 'Today', icon: '☀️' },
+  { key: 'weekly', title: 'Weekly', icon: '📅' },
+];
+
+
+export default function App() {
+  return (
+    <SafeAreaProvider>
+      <TabViewExample />
+    </SafeAreaProvider>
+  );
+}
+
+export function TabViewExample() {
+  const insets = useSafeAreaInsets();
+  const layout = useWindowDimensions();
+  const [index, setIndex] = React.useState(0);
+  const [position, setPosition] = React.useState('');
+
+  const renderTabBar = props => (
+    <TabBar
+      {...props}
+      indicatorStyle={{ backgroundColor: 'white' }}
+      style={{ backgroundColor: '#FFFBFF' }}
+    />
+  );
+
+
+  return (
+    <View style={{ flex: 1, paddingTop: insets.top, paddingBottom: insets.bottom }}>
+      <StatusBar style='auto' />
+      <MySearchBar setPosition={setPosition} />
+
+
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={({ route }) => {
+          switch (route.key) {
+            case 'currently':
+              return <CurrentlyRoute position={position} />;
+            case 'today':
+              return <TodayRoute position={position} />;
+            case 'weekly':
+              return <WeeklyRoute position={position} />;
+            default:
+              return null;
+          }
+        }}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+        tabBarPosition="bottom"
+        renderTabBar={renderTabBar}
+        options={{
+          currently: {
+            label: ({ route, labelText, focused, color }) => (
+              <Text style={{ color: focused ? '#5B5D72' : '#aeaeb7ff', margin: 8 }}>{labelText ?? route.icon}</Text>
+            ),
+            icon: ({ route, focused, color }) => (
+              <Icon name={focused ? 'settings' : 'settings'} color={focused ? '#5B5D72' : '#aeaeb7ff'} />
+            ),
+          },
+          today: {
+            label: ({ route, labelText, focused, color }) => (
+              <Text style={{ color: focused ? '#5B5D72' : '#aeaeb7ff', margin: 8 }}>{labelText ?? route.icon}</Text>
+            ),
+                        icon: ({ route, focused, color }) => (
+              <Icon name={focused ? 'event' : 'event'} color={focused ? '#5B5D72' : '#aeaeb7ff'} />
+            ),
+          },
+          weekly: {
+            label: ({ route, labelText, focused, color }) => (
+              <Text style={{ color: focused ? '#5B5D72' : '#aeaeb7ff', margin: 8 }}>{labelText ?? route.icon}</Text>
+            ),
+                        icon: ({ route, focused, color }) => (
+              <Icon name={focused ? 'calendar-month' : 'calendar-month'} color={focused ? '#5B5D72' : '#aeaeb7ff'} />
+            ),
+          },
+        }}
+      />
+    </View>
+  );
+}
+
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#5B5D72',
+  },
+  searchContainer: {
+    backgroundColor: '#5B5D72',
+    padding: 10,
+  },
+  searchInput: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
+  tabText: {
+    color: '#000000ff',
+    fontSize: 30,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  tabBackground: {
+    flex: 1,
+    backgroundColor: '#ffffffff',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+});
