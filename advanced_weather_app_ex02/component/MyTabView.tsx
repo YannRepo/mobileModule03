@@ -10,26 +10,10 @@ import { locationData } from '../types';
 import RouteCurrently from './RouteCurrently';
 import RouteToday from './RouteToday';
 import RouteWeekly from './RouteWeekly';
+import { styles, colors } from '../styles/styles';
+
 
 import { WeatherContext } from '../context/WeatherContext';
-
-const WeeklyRoute = ({ position }: { position: string }) => (
-    <View style={styles.tabBackground}>
-        
-        {position === 'errorLocation' ? (
-            <Text style={[styles.tabText, { color: 'red' }]}>
-                Geolocation is not available, please enable it in your App settings
-            </Text>
-        ) : (
-            <View >
-                <Text style={styles.tabText}>Weekly</Text>
-                <Text style={styles.tabText}>{position}</Text>
-            </View>
-        )}
-    </View>
-);
-
-
 
 const routes = [
     { key: 'currently', title: 'Currently' },
@@ -40,24 +24,24 @@ const routes = [
 export default function MyTabView() {
     const layout = useWindowDimensions();
     const [index, setIndex] = React.useState(0);
-    const { data, setData, fetchWeather } = useContext(WeatherContext);
 
     const renderTabBar = props => (
         <TabBar
             {...props}
             indicatorStyle={{ backgroundColor: 'white' }}
-            style={{ backgroundColor: '#FFFBFF' }}
+            style={styles.tabBar}
         />
     );
 
     const getColor = (focused: boolean) => ({
-        color: focused ? '#5B5D72' : '#aeaeb7ff',
+        color: focused ? styles.tabIconFocuses.color : styles.tabIconNotFocuses.color,
     });
 
 
     return (
         <View style={{ flex: 1 }}>
             <TabView
+            style={{ flex: 1 }}
                 navigationState={{ index, routes }}
                 renderScene={({ route }) => {
                     switch (route.key) {
@@ -67,7 +51,6 @@ export default function MyTabView() {
                             return <RouteToday />;
                         case 'weekly':
                             return <RouteWeekly />;
-                            return <Text>a faire</Text>;
                         default:
                             return null;
                     }
@@ -106,33 +89,3 @@ export default function MyTabView() {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    safeArea: {
-        flex: 1,
-        backgroundColor: '#5B5D72',
-    },
-    searchContainer: {
-        backgroundColor: '#5B5D72',
-        padding: 10,
-    },
-    searchInput: {
-        backgroundColor: '#fff',
-        borderRadius: 8,
-        padding: 8,
-        borderWidth: 1,
-        borderColor: '#ccc',
-    },
-    tabText: {
-        color: '#000000ff',
-        fontSize: 30,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    tabBackground: {
-        flex: 1,
-        backgroundColor: '#ffffffff',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-});

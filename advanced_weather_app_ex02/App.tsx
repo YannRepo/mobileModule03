@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View,Text } from 'react-native';
+import { View, ImageBackground } from 'react-native';
 import { useState, useContext, createContext } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -11,7 +11,8 @@ import MyTabView from './component/MyTabView';
 
 import { WeatherProvider } from './context/WeatherContext';
 
-import { locationData } from './types'; 
+import { locationData } from './types';
+import { colors, styles } from './styles/styles';
 
 export default function App() {
   return (
@@ -37,12 +38,17 @@ export function TabViewExample() {
 
 
   return (
-    
-      <View style={{ flex: 1, flexDirection: 'column', paddingTop: insets.top, paddingBottom: insets.bottom }}>
-        <StatusBar style='auto' />
+    <View style={[styles.mainContainer, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
+      <ImageBackground
+        source={require('./assets/cloud.jpg')}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      >
+        <StatusBar style='light' />
         <ResearchLocationArea />
         <MyTabView />
-      </View>
+      </ImageBackground>
+    </View>
   );
 }
 
