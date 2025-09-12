@@ -9,8 +9,8 @@ import { fetchWeatherApi } from 'openmeteo';
 
 export interface WeatherData {
     location: { city: string; region: string; country: string };
-    current: { temperature: number; description: string; wind: number };
-    hourly: Array<{ time: string; temperature: number; description: string; wind: number }>;
+    current: { temperature: number; weatherCode: number; description: string; wind: number };
+    hourly: Array<{ time: string; temperature: number; weatherCode: number;description: string; wind: number }>;
     daily: Array<{ date: string; min: number; max: number; description: string }>;
     error: string | null;
 }
@@ -27,7 +27,7 @@ export const WeatherContext = createContext<{
 export const WeatherProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [data, setData] = useState<WeatherData>({
         location: { city: '', region: '', country: '' },
-        current: { temperature: 0, description: '', wind: 0 },
+        current: { temperature: 0, weatherCode: 0, description: '', wind: 0 },
         hourly: [],
         daily: [],
         error: null,
@@ -36,7 +36,7 @@ export const WeatherProvider: React.FC<{ children: ReactNode }> = ({ children })
     const setError = (error: string | null) => {
         setData({
             location: { city: '', region: '', country: '' },
-            current: { temperature: '0', description: '', wind: 0 },
+            current: { temperature: 0, weatherCode: 0, description: '', wind: 0 },
             hourly: [],
             daily: [],
             error: error
@@ -110,6 +110,7 @@ export const WeatherProvider: React.FC<{ children: ReactNode }> = ({ children })
             const curr = response.current()!;
             const current = {
                 temperature: Math.round(curr.variables(0)!.value()),
+                weatherCode: curr.variables(1)!.value(),
                 description: getMeteoDescription(curr.variables(1)!.value()),
                 wind: Math.round(curr.variables(2)!.value())
             };
@@ -119,6 +120,7 @@ export const WeatherProvider: React.FC<{ children: ReactNode }> = ({ children })
             const hourly = Array.from({ length: 24 }, (_, i) => ({
                 time: new Date((Number(h.time()) + i * h.interval() + offset) * 1000).toISOString().slice(11, 16),  //h.time : from 00:00 to 23:00 of the concern city given in GMT (starts at 7am for San Francisco for example)
                 temperature: Math.round(h.variables(0)!.valuesArray()![i]),
+                weatherCode: h.variables(1)!.valuesArray()![i],
                 description: getMeteoDescription(h.variables(1)!.valuesArray()![i]),
                 wind: Math.round(h.variables(2)!.valuesArray()![i])
             }));

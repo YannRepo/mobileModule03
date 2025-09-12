@@ -6,15 +6,24 @@ export const colors = {
     primaryLight: '#9598aeff',
     primary: '#2E294E',
     primaryDark: '#1C1A2D',
-    secondary: '#37bff1ff',
-    third:  '#F18E37',//#851035ff',
-    thirdLight: '#ebae7aff',
+    secondary: '#57caf4ff',
+    secondaryLight: '#DCF4FD',
+    secondaryDark: '#04354aff',
+    third: '#F18E37',//#851035ff',
+    thirdLight: '#fcecddff',
     thirdDark: '#94531aff',
     fourth: '#ca3b69ff',
     accent: '#F3E8EE',
     error: 'red',
     tabBackground: '#ffffffbb',
 };
+
+export const todayColors = {
+    todayChartBackground: colors.secondaryDark,
+    todayChartLine: colors.secondary,
+    todayChartDot: colors.secondaryDark,
+    todayWindIcon: colors.secondary,
+}
 
 export const styles = StyleSheet.create({
 
@@ -26,37 +35,66 @@ export const styles = StyleSheet.create({
 
     // SearchBar
     searchContainer: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.primaryDark, padding: 10 },
-    searchInput: { backgroundColor: '#EEE8F4', borderRadius: 38, padding: 2, },
-    item: { padding: 8, borderBottomWidth: 1, borderBottomColor: "#2E294E", backgroundColor: '#D499B9' },
-    icon: { color: '#F3E8EE', backgroundColor: '#F3E8EE' },
-    iconColor: { color: '#2E294E' },
-    tabIconFocuses: { color: colors.secondary },
-    tabIconNotFocuses: { color: colors.primaryLight },
+    searchInput: { backgroundColor: colors.secondaryLight, borderRadius: 38, padding: 2, },
+    item: { padding: 8, borderBottomWidth: 1, borderBottomColor: colors.primaryDark, backgroundColor: colors.thirdLight },
+    icon: { color: colors.secondaryLight, backgroundColor: colors.secondaryLight },
+    iconColor: { color: colors.primaryDark },
+
 
     // TabBar
     tabBar: { backgroundColor: colors.primaryDark },
     tabBarLabel: { color: '#fff', fontSize: 14, fontWeight: 'bold' },
+    tabIconFocuses: { color: colors.third },
+    tabIconNotFocuses: { color: colors.primaryLight },
 
     // Error text
     errorText: { fontSize: 20, color: 'red', textAlign: 'center' },
 
+    // All routes
+    tabBackground: { flex: 1, backgroundColor: colors.tabBackground, justifyContent: 'center', alignItems: 'center' },
+
     // RouteCurrently
-    CurrentlyTabText: { color: '#000000ff', fontSize: 30, fontWeight: 'bold', textAlign: 'center' },
-    CurrentlyTabBackground: { flex: 1, backgroundColor: colors.tabBackground, justifyContent: 'center', alignItems: 'center' },
-    CurrentlyWeatherInfoText: { fontSize: 20, alignItems: 'center' },
+    currentlyLocationCityInfoText: { fontSize: 28, color: colors.third, textAlign: 'center', fontWeight: 'bold' },
+    currentlyLocationRegionInfoText: { fontSize: 24, color: colors.primaryDark, textAlign: 'center' },
+    currentlyLocationCountryInfoText: { fontSize: 24, color: colors.primaryDark, textAlign: 'center' },
+    currentlyWeatherTemperatureInfoText: { fontSize: 36, color: colors.primaryDark, textAlign: 'center', fontWeight: 'bold' },
+    currentlyWeatherDescriptionInfoText: { fontSize: 26, color: colors.primaryDark, textAlign: 'center' },
+    currentlyWeatherWindIcon: { fontSize: 36, color: colors.secondary, textAlign: 'center' },
+    currentlyWeatherWindInfoText: { fontSize: 30, color: colors.primaryDark, textAlign: 'center' },
+    currentlyWeatherIcon: { fontSize: 60, color: colors.third },
 
 
     // Route Today
-    locationCityInfoText: { fontSize: 24, color: colors.third,  textAlign: 'center', fontWeight: 'bold' },
-    locationRegionInfoText: { fontSize: 20, color: colors.thirdLight, textAlign: 'center' },
-    locationCountryInfoText: { fontSize: 20, color: colors.thirdLight, textAlign: 'center' },
-    weatherTemperatureInfoText: { fontSize: 16, textAlign: 'center' },
-    weatherDescriptionInfoText: { fontSize: 16, textAlign: 'center' },
-    weatherWindInfoText: { fontSize: 16, textAlign: 'center' },
+    todayLocationCityInfoText: { fontSize: 28, color: colors.third, textAlign: 'center', fontWeight: 'bold' },
+    todayLocationRegionInfoText: { fontSize: 24, color: colors.primaryDark, textAlign: 'center' },
+    todayLocationCountryInfoText: { fontSize: 24, color: colors.primaryDark, textAlign: 'center' },
     row: { flexDirection: 'row', paddingVertical: 3, justifyContent: 'space-between' },
     tabText: { color: '#000000ff', fontSize: 30, fontWeight: 'bold', textAlign: 'center' },
-    tabBackground: { flex: 1, backgroundColor: '#ffffffff', justifyContent: 'center', alignItems: 'center' },
     weatherInfoText: { fontSize: 12, alignItems: 'center', width: 80, textAlign: 'center' },
+    chartColors: { background: colors.thirdLight, curve: colors.thirdLight, dot: colors.third },
+    chartContainer: { flex: 0.8, alignItems: 'center', justifyContent: 'flex-start', },
+    chartTitle: { fontSize: 12, marginVertical: 15 },
+    chart: { flex: 1, borderRadius: 4 },
+    flatListContainer: { flex: 0.54, padding: 24, },
+    hourlyItem: {
+        backgroundColor: '#ffffffae', borderRadius: 12, alignItems: 'center', justifyContent: 'space-around', minHeight: 140, elevation: 3,
+    },
+
+    hourlyList: {
+        // paddingHorizontal: 8,
+    },
+
+    timeText: { fontSize: 16, fontWeight: '600', color: colors.primaryDark, marginTop: 8, },
+    temperatureText: { fontSize: 20, fontWeight: 'bold', color: colors.primary, },
+    descriptionText: { fontSize: 12, color: '#666', textAlign: 'center', textTransform: 'capitalize', lineHeight: 16, },
+    windText: { fontSize: 15, color: '#999', fontWeight: '500', marginBottom: 8, textAlign: 'center',},
+    separator: {
+        width: 10,
+    },
+
+
+
+    // graph
 
     // Route Weekly
     weeklyLocationInfoText: { fontSize: 16, textAlign: 'center' },
