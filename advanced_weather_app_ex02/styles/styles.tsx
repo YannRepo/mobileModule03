@@ -25,6 +25,14 @@ export const todayColors = {
     todayWindIcon: colors.secondary,
 }
 
+export const weeklyColors = {
+    weeklyChartBackground: colors.secondaryDark,
+    weeklyChartLineMin: '#5d9dddff',
+    weeklyChartLineMax: '#c57654ff',
+    weeklyChartDot: colors.secondaryDark,
+    weeklyWindIcon: colors.secondary,
+}
+
 export const styles = StyleSheet.create({
 
     // Main container (with SafeArea)
@@ -35,9 +43,9 @@ export const styles = StyleSheet.create({
 
     // SearchBar
     searchContainer: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.primaryDark, padding: 10 },
-    searchInput: { backgroundColor: colors.secondaryLight, borderRadius: 38, padding: 2, },
-    item: { padding: 8, borderBottomWidth: 1, borderBottomColor: colors.primaryDark, backgroundColor: colors.thirdLight },
-    icon: { color: colors.secondaryLight, backgroundColor: colors.secondaryLight },
+    searchInput: { backgroundColor: 'white', borderRadius: 38, padding: 2, },
+    item: { padding: 12, borderColor: colors.primaryLight, borderBottomWidth: 1, borderBottomColor: colors.primaryDark, backgroundColor: 'white' },
+    icon: { color: 'white', backgroundColor: colors.secondaryLight },
     iconColor: { color: colors.primaryDark },
 
 
@@ -52,6 +60,14 @@ export const styles = StyleSheet.create({
 
     // All routes
     tabBackground: { flex: 1, backgroundColor: colors.tabBackground, justifyContent: 'center', alignItems: 'center' },
+    row: { flexDirection: 'row', paddingVertical: 3, justifyContent: 'space-between' },
+    tabText: { color: '#000000ff', fontSize: 30, fontWeight: 'bold', textAlign: 'center' },
+    weatherInfoText: { fontSize: 12, alignItems: 'center', width: 80, textAlign: 'center' },
+    chartColors: { background: colors.thirdLight, curve: colors.thirdLight, dot: colors.third },
+    chartContainer: { flex: 0.8, alignItems: 'center', justifyContent: 'flex-start', },
+    chartTitle: { fontSize: 12, marginVertical: 15 },
+    chart: { flex: 1, borderRadius: 4 },
+    flatListContainer: { flex: 0.40, padding: 24, },
 
     // RouteCurrently
     currentlyLocationCityInfoText: { fontSize: 28, color: colors.third, textAlign: 'center', fontWeight: 'bold' },
@@ -61,42 +77,39 @@ export const styles = StyleSheet.create({
     currentlyWeatherDescriptionInfoText: { fontSize: 26, color: colors.primaryDark, textAlign: 'center' },
     currentlyWeatherWindIcon: { fontSize: 36, color: colors.secondary, textAlign: 'center' },
     currentlyWeatherWindInfoText: { fontSize: 30, color: colors.primaryDark, textAlign: 'center' },
-    currentlyWeatherIcon: { fontSize: 60, color: colors.third },
+    currentlyWeatherIcon: { fontSize: 55, color: colors.third },
 
 
     // Route Today
     todayLocationCityInfoText: { fontSize: 28, color: colors.third, textAlign: 'center', fontWeight: 'bold' },
     todayLocationRegionInfoText: { fontSize: 24, color: colors.primaryDark, textAlign: 'center' },
     todayLocationCountryInfoText: { fontSize: 24, color: colors.primaryDark, textAlign: 'center' },
-    row: { flexDirection: 'row', paddingVertical: 3, justifyContent: 'space-between' },
-    tabText: { color: '#000000ff', fontSize: 30, fontWeight: 'bold', textAlign: 'center' },
-    weatherInfoText: { fontSize: 12, alignItems: 'center', width: 80, textAlign: 'center' },
-    chartColors: { background: colors.thirdLight, curve: colors.thirdLight, dot: colors.third },
-    chartContainer: { flex: 0.8, alignItems: 'center', justifyContent: 'flex-start', },
-    chartTitle: { fontSize: 12, marginVertical: 15 },
-    chart: { flex: 1, borderRadius: 4 },
-    flatListContainer: { flex: 0.54, padding: 24, },
-    hourlyItem: {
-        backgroundColor: '#ffffffae', borderRadius: 12, alignItems: 'center', justifyContent: 'space-around', minHeight: 140, elevation: 3,
-    },
 
-    hourlyList: {
-        // paddingHorizontal: 8,
-    },
+    hourlyItem: { backgroundColor: '#ffffffae', borderRadius: 12, alignItems: 'center', justifyContent: 'space-around', minHeight: 140, },
+    hourlyList: {},
 
-    timeText: { fontSize: 16, fontWeight: '600', color: colors.primaryDark, marginTop: 8, },
-    temperatureText: { fontSize: 20, fontWeight: 'bold', color: colors.primary, },
-    descriptionText: { fontSize: 12, color: '#666', textAlign: 'center', textTransform: 'capitalize', lineHeight: 16, },
-    windText: { fontSize: 15, color: '#999', fontWeight: '500', marginBottom: 8, textAlign: 'center',},
-    separator: {
-        width: 10,
-    },
+    hourlyTimeText: { fontSize: 16, fontWeight: '600', color: colors.primaryDark, marginTop: 8, },
+    hourlyTemperatureText: { fontSize: 20, fontWeight: 'bold', color: colors.primary, },
+    hourlyDescriptionText: { fontSize: 12, color: '#666', textAlign: 'center', textTransform: 'capitalize', lineHeight: 16, },
+    hourlyWindText: { fontSize: 15, color: '#999', fontWeight: '500', marginBottom: 8, textAlign: 'center', },
+    hourlySeparator: { width: 10, },
 
 
 
     // graph
 
     // Route Weekly
+    dailyItem: { backgroundColor: '#ffffffae', borderRadius: 12, alignItems: 'center', justifyContent: 'space-around', minHeight: 140, },
+    dailyDateText: { fontSize: 16, fontWeight: '600', color: colors.primaryDark, marginTop: 8, },
+    dailyMinText: { fontSize: 16, color: weeklyColors.weeklyChartLineMin, },
+    dailyMaxText: { fontSize: 16, color: weeklyColors.weeklyChartLineMax, },
+    dailyDescriptionText: { fontSize: 12, color: '#666', textAlign: 'center', textTransform: 'capitalize', lineHeight: 16, },
+    dailyWindText: { fontSize: 15, color: '#999', fontWeight: '500', marginBottom: 8, textAlign: 'center', },
+    dailySeparator: { width: 10, },
+
+
+
+
     weeklyLocationInfoText: { fontSize: 16, textAlign: 'center' },
     weeklyRow: { flexDirection: 'row', paddingVertical: 3, justifyContent: 'space-between' },
     weeklyTabText: { color: '#000000ff', fontSize: 30, fontWeight: 'bold', textAlign: 'center' },

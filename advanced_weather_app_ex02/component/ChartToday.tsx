@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, Dimensions, StyleSheet } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { colors, todayColors, styles } from '../styles/styles';
@@ -12,17 +12,16 @@ interface HourlyData {
     wind: number;
 }
 
-interface TemperatureChartProps {
+interface HourlyTemperatureChartProps {
     hourly: HourlyData[];
 }
 
-const TemperatureChart: React.FC<TemperatureChartProps> = ({ hourly }) => {
+const HourlyTemperatureChart: React.FC<HourlyTemperatureChartProps> = ({ hourly }) => {
     const screenWidth = Dimensions.get('window').width;
+    const [chartHeight, setChartHeight] = useState(0);
 
     // Extract temperatures and calculate min/max with padding
     const temperatures = hourly.map(item => item.temperature);
-    const minTemp = Math.min(...temperatures) - 5;
-    const maxTemp = Math.max(...temperatures) + 5;
 
     // Prepare data for the chart
     const chartData = {
@@ -73,12 +72,16 @@ const TemperatureChart: React.FC<TemperatureChartProps> = ({ hourly }) => {
     };
 
     return (
-        <View style={styles.chartContainer}>
+        <View style={styles.chartContainer} onLayout={(event) => {
+                const { height } = event.nativeEvent.layout;
+                setChartHeight(height);
+            }}>
+
             <Text style={styles.chartTitle}>Today temperatures</Text>
             <LineChart
                 data={chartData}
                 width={screenWidth - 32} // Account for padding
-                height={ScreenHeight * 0.32} // 40% of screen height
+                height={chartHeight ? chartHeight : ScreenHeight * 0.32} // 40% of screen height
                 chartConfig={chartConfig}
                 bezier // Smooth curve
                 style={styles.chart}
@@ -99,16 +102,4 @@ const TemperatureChart: React.FC<TemperatureChartProps> = ({ hourly }) => {
     );
 };
 
-export default TemperatureChart;
-
-// Usage example:
-/*
-const hourlyData = [
-  { time: '00:00', temperature: 15, description: 'Clear', wind: 10 },
-  { time: '01:00', temperature: 14, description: 'Clear', wind: 12 },
-  { time: '02:00', temperature: 13, description: 'Partly cloudy', wind: 8 },
-  // ... more data
-];
-
-<TemperatureChart hourly={hourlyData} />
-*/
+export default HourlyTemperatureChart;

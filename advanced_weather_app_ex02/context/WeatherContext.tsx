@@ -11,7 +11,7 @@ export interface WeatherData {
     location: { city: string; region: string; country: string };
     current: { temperature: number; weatherCode: number; description: string; wind: number };
     hourly: Array<{ time: string; temperature: number; weatherCode: number;description: string; wind: number }>;
-    daily: Array<{ date: string; min: number; max: number; description: string }>;
+    daily: Array<{ date: string; min: number; max: number; weatherCode: number; description: string }>;
     error: string | null;
 }
 
@@ -129,12 +129,16 @@ export const WeatherProvider: React.FC<{ children: ReactNode }> = ({ children })
             // Daily
             const d = response.daily()!;
             const dailyCount = (Number(d.timeEnd()) - Number(d.time())) / d.interval();
-            const daily = Array.from({ length: dailyCount }, (_, i) => ({
-                date: new Date((Number(d.time()) + i * d.interval() + offset) * 1000).toISOString().slice(0, 10),
-                max: Math.round(d.variables(0)!.valuesArray()![i]),
-                min: Math.round(d.variables(1)!.valuesArray()![i]),
-                description: getMeteoDescription(d.variables(2)!.valuesArray()![i])
-            }));
+            const daily = Array.from({ length: dailyCount }, (_, i) => {
+                const dateTmp = new Date((Number(d.time()) + i * d.interval() + offset) * 1000).toISOString().slice(0, 10);
+                return {
+                    date: dateTmp.split('-')[2] + '/' + dateTmp.split('-')[1],
+                    max: Math.round(d.variables(0)!.valuesArray()![i]),
+                    min: Math.round(d.variables(1)!.valuesArray()![i]),
+                    weatherCode: d.variables(2)!.valuesArray()![i],
+                    description: getMeteoDescription(d.variables(2)!.valuesArray()![i])
+                };
+            });
 
             const newData = { location, current, hourly, daily, error: null };
 

@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { useContext } from 'react';
 import { WeatherContext } from '../context/WeatherContext';
 import { styles } from '../styles/styles';
+import DailyTemperatureChart from './ChartDaily';
+import FlatListWeekly from './FlatListWeekly';
 
 export default function RouteWeekly() {
 
@@ -19,10 +21,13 @@ export default function RouteWeekly() {
                     <Text style={styles.errorText}>{data.error}</Text>
                 ) : (
                     <View >
-                        <Text style={styles.weeklyLocationInfoText}>{data?.location?.city ?? ''}</Text>
-                        <Text style={styles.weeklyLocationInfoText}>{data?.location?.region ?? ''}</Text>
-                        <Text style={styles.weeklyLocationInfoText}>{data?.location?.country ?? ''}</Text>
-                        <FlatList
+                        <Text style={styles.todayLocationCityInfoText}>{data?.location?.city ?? ''}</Text>
+                        <Text style={styles.todayLocationRegionInfoText}>{data?.location?.region ?? ''}</Text>
+                        <Text style={styles.todayLocationCountryInfoText}>{data?.location?.country ?? ''}</Text>
+                        <DailyTemperatureChart daily={data?.daily ?? []} />
+                        <FlatListWeekly daily={data?.daily ?? []} />
+
+                        {/* <FlatList
                             data={data?.daily ?? []}
                             keyExtractor={(_, index) => index.toString()}
                             renderItem={({ item, index }) => (
@@ -33,7 +38,7 @@ export default function RouteWeekly() {
                                     <Text style={styles.weeklyWeatherInfoText}>{item.description} </Text>
                                 </View>
                             )}
-                        />
+                        /> */}
                     </View>
                 )}
             </View>

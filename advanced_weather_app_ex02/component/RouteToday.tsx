@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { useContext } from 'react';
 import { WeatherContext } from '../context/WeatherContext';
 import { styles } from '../styles/styles';
-import TemperatureChart from './ChartToday';
-import WeatherComponent from './FlatListToday';
+import HourlyTemperatureChart from './ChartToday';
+import FlatListToday from './FlatListToday';
 
 export default function RouteToday() {
 
@@ -24,7 +24,7 @@ export default function RouteToday() {
                         <Text style={styles.todayLocationCityInfoText}>{data?.location?.city ?? ''}</Text>
                         <Text style={styles.todayLocationRegionInfoText}>{data?.location?.region ?? ''}</Text>
                         <Text style={styles.todayLocationCountryInfoText}>{data?.location?.country ?? ''}</Text>
-                        <TemperatureChart hourly={data?.hourly ?? []} />
+                        <HourlyTemperatureChart hourly={data?.hourly ?? []} />
                          {/* <FlatList
                             data={data?.hourly ?? []}
                             keyExtractor={(_, index) => index.toString()}
@@ -42,7 +42,7 @@ export default function RouteToday() {
                                 // </View>
                             )}
                         /> */}
-                        <WeatherComponent hourly={data?.hourly ?? []} />
+                        <FlatListToday hourly={data?.hourly ?? []} />
                     </View>
                 )}
             </View>

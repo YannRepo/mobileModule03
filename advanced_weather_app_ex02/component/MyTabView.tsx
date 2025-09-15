@@ -1,12 +1,8 @@
 import * as React from 'react';
 import { View, useWindowDimensions, Text, StyleSheet } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import { useState, useContext, createContext, ReactNode } from 'react';
+import { Ionicons } from '@expo/vector-icons';
 
-import { Icon } from 'react-native-elements';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-
-import { locationData } from '../types';
 import RouteCurrently from './RouteCurrently';
 import RouteToday from './RouteToday';
 import RouteWeekly from './RouteWeekly';
@@ -65,7 +61,7 @@ export default function MyTabView() {
                             <Text style={{ ...getColor(focused), margin: 8 }}>{labelText}</Text>
                         ),
                         icon: ({ route, focused, color }) => (
-                            <Icon name={focused ? 'settings' : 'settings'} {...getColor(focused)} />
+                            <Ionicons name={'settings-sharp'} size={25} {...getColor(focused)} />
                         ),
                     },
                     today: {
@@ -73,7 +69,7 @@ export default function MyTabView() {
                             <Text style={{ ...getColor(focused), margin: 8 }}>{labelText}</Text>
                         ),
                         icon: ({ route, focused, color }) => (
-                            <Icon name={focused ? 'event' : 'event'} {...getColor(focused)} />
+                            <Ionicons name={'calendar-clear-sharp'} size={25} {...getColor(focused)} />
                         ),
                     },
                     weekly: {
@@ -81,7 +77,7 @@ export default function MyTabView() {
                             <Text style={{ ...getColor(focused), margin: 8 }}>{labelText}</Text>
                         ),
                         icon: ({ route, focused, color }) => (
-                            <Icon name={focused ? 'calendar-month' : 'calendar-month'} {...getColor(focused)} />
+                            <Ionicons name={'calendar-sharp'} size={25} {...getColor(focused)} />
                         ),
                     },
                 }}

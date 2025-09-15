@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useContext } from 'react';
 import { WeatherContext } from '../context/WeatherContext';
 import { styles } from '../styles/styles';
-import { Icon } from 'react-native-elements';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { WeatherIcon } from './WeatherIcon';
 
 
@@ -32,8 +32,8 @@ export default function RouteCurrently() {
                         <Text style={styles.currentlyWeatherDescriptionInfoText}>{data?.current?.description ?? ''}</Text>
                         <WeatherIcon code={data?.current?.weatherCode ?? 0} color={styles.currentlyWeatherIcon.color} size={styles.currentlyWeatherIcon.fontSize} />
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Icon name={'air'} color={styles.currentlyWeatherWindIcon.color} size={styles.currentlyWeatherWindIcon.fontSize} />
-                            <Text style={styles.currentlyWeatherWindInfoText}>{data?.current?.wind ?? ''} km/h</Text>
+                            <FontAwesome5 name={'wind'} color={styles.currentlyWeatherWindIcon.color} size={27} />
+                            <Text style={styles.currentlyWeatherWindInfoText}>  {data?.current?.wind ?? ''} km/h</Text>
                         </View>
                     </View>
                 </View>

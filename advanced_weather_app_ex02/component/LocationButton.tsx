@@ -1,6 +1,7 @@
 import { useEffect, useContext } from 'react';
 
 import { Icon } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import { styles } from '../styles/styles';
 
@@ -23,6 +24,10 @@ export default function LocationButton() {
     const { data, setData, fetchLocationAndWeather } = weatherContext;
 
     const handleGeolocation = async () => {
+        setData((prevData: any) => ({
+                ...prevData,
+                error: 'Loading',
+            }));
         const { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
             console.log("[LocationButton] Error: 'Permission to access location is denied.");
@@ -38,11 +43,12 @@ export default function LocationButton() {
 
 
     return (
-        <Icon
-            name='near-me'
-            size={38}
-            color={styles.icon.color}
-            onPress={() => { handleGeolocation(); }}
-        />
+        // <Icon
+        //     name='near-me'
+        //     size={38}
+        //     color={styles.icon.color}
+        //     onPress={() => { handleGeolocation(); }}
+        // />
+        <Ionicons name="location-sharp" size={38} color={styles.icon.color} onPress={() => { handleGeolocation(); }} />
     );
 };

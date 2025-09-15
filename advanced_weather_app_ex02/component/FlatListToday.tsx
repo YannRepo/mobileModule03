@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet, Dimensions, } from 'react-native';
 import { WeatherIcon } from './WeatherIcon';
 import { colors, todayColors, styles } from '../styles/styles';
-import { Icon } from 'react-native-elements';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 // a decaler dans Weathercontext.tsx
 interface HourlyData {
@@ -13,35 +13,23 @@ interface HourlyData {
     wind: number;
 }
 
-interface WeatherComponentProps {
+interface FlatListTodayProps {
     hourly: HourlyData[];
 }
 
 const { width } = Dimensions.get('window');
 const ITEM_WIDTH = 120;
 
-const WeatherComponent: React.FC<WeatherComponentProps> = ({ hourly }) => {
-    const formatTime = (timeString: string) => {
-        try {
-            const date = new Date(timeString);
-            return date.toLocaleTimeString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false
-            });
-        } catch {
-            return timeString;
-        }
-    };
-
+const FlatListToday: React.FC<FlatListTodayProps> = ({ hourly }) => {
+    
     const renderHourlyItem = ({ item }: { item: typeof hourly[0] }) => (
         <View style={[styles.hourlyItem, { width: ITEM_WIDTH }]}>
-            <Text style={styles.timeText}>{item.time}</Text>
+            <Text style={styles.hourlyTimeText}>{item.time}</Text>
             <WeatherIcon code={item.weatherCode} />
-            <Text style={styles.temperatureText}>{Math.round(item.temperature)}°</Text>
+            <Text style={styles.hourlyTemperatureText}>{Math.round(item.temperature)}°</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Icon name={'air'} color={todayColors.todayWindIcon} size={20} style={{ marginBottom: 6 }} />
-                <Text style={styles.windText}>{Math.round(item.wind)} km/h</Text>
+                <FontAwesome5 name={'wind'} color={todayColors.todayWindIcon} size={15} style={{ marginBottom: 6 }}/>
+                <Text style={styles.hourlyWindText}> {Math.round(item.wind)} km/h</Text>
             </View>
         </View>
     );
@@ -55,7 +43,7 @@ const WeatherComponent: React.FC<WeatherComponentProps> = ({ hourly }) => {
                 horizontal
                 showsHorizontalScrollIndicator={true}
                 contentContainerStyle={styles.hourlyList}
-                ItemSeparatorComponent={() => <View style={styles.separator} />}
+                ItemSeparatorComponent={() => <View style={styles.hourlySeparator} />}
                 snapToInterval={ITEM_WIDTH + 10}
                 decelerationRate="fast"
             />
@@ -64,4 +52,4 @@ const WeatherComponent: React.FC<WeatherComponentProps> = ({ hourly }) => {
 };
 
 
-export default WeatherComponent;
+export default FlatListToday;

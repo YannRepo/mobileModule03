@@ -3,7 +3,7 @@ import { Searchbar } from 'react-native-paper';
 import { useState, useContext, useCallback } from 'react';
 import { WeatherContext } from '../context/WeatherContext';
 import { styles } from '../styles/styles';
-import { Icon } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 
 import debounce from "lodash.debounce";
 
@@ -114,7 +114,7 @@ export default function MySearchBar() {
             right: 10,
             backgroundColor: "white",
             zIndex: 1000,
-            maxHeight: 220,
+            maxHeight: 230,
           }}
           data={results}
           keyExtractor={(item) => item.id.toString()}
@@ -124,7 +124,7 @@ export default function MySearchBar() {
               onPress={() => { handleListSelection(item) }}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Icon name={'chevron-right'} type='material' />
+                <Ionicons name={'chevron-forward-sharp'}  />
                 <Text style={{ fontWeight: 'bold' }}> {item.name}</Text>
                 <Text>, {item.admin1}, {item.country}</Text>
               </View>
