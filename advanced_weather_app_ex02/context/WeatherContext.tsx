@@ -48,7 +48,7 @@ export const WeatherProvider: React.FC<{ children: ReactNode }> = ({ children })
         try {
             console.log("[INFO] WeatherContext/getLocation lat / lon:", lat, lon);
 
-            const APIGeocodeAnswer = await fetch(`https://aapi.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}`);
+            const APIGeocodeAnswer = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}`);
 
             const cityData = await APIGeocodeAnswer.json();
             if (cityData.city) {
