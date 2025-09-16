@@ -10,7 +10,7 @@ import { fetchWeatherApi } from 'openmeteo';
 export interface WeatherData {
     location: { city: string; region: string; country: string };
     current: { temperature: number; weatherCode: number; description: string; wind: number };
-    hourly: Array<{ time: string; temperature: number; weatherCode: number;description: string; wind: number }>;
+    hourly: Array<{ time: string; temperature: number; weatherCode: number; description: string; wind: number }>;
     daily: Array<{ date: string; min: number; max: number; weatherCode: number; description: string }>;
     error: string | null;
 }
@@ -46,7 +46,10 @@ export const WeatherProvider: React.FC<{ children: ReactNode }> = ({ children })
 
     const getLocation = async (lat: number, lon: number) => {
         try {
-            const APIGeocodeAnswer = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}`);
+            console.log("[INFO] WeatherContext/getLocation lat / lon:", lat, lon);
+
+            const APIGeocodeAnswer = await fetch(`https://aapi.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}`);
+
             const cityData = await APIGeocodeAnswer.json();
             if (cityData.city) {
 
@@ -61,7 +64,8 @@ export const WeatherProvider: React.FC<{ children: ReactNode }> = ({ children })
                 return { city: '', region: '', country: '' };
             }
         } catch (e: any) {
-            setError(e.message);
+            console.log("[Error] WeatherContext/getLocation error message:", e);
+            setError("Network error, please try again later.");
             return { city: '', region: '', country: '' };
         }
     };
@@ -80,7 +84,6 @@ export const WeatherProvider: React.FC<{ children: ReactNode }> = ({ children })
 
 
     const fetchLocationAndWeather = async (lat: number, lon: number) => {
-        console.log("[WeatherContext] fetchLocationAndWeather:", lat, lon);
         const { city, region, country } = await getLocation(lat, lon);
         if (city === '' || city === 'Unknown') {
 
@@ -91,6 +94,7 @@ export const WeatherProvider: React.FC<{ children: ReactNode }> = ({ children })
 
     const fetchWeather = async (lat: number, lon: number, city: string, region: string, country: string) => {
         try {
+            console.log("[INFO] WeatherContext/fetchWeather lat / lon:", lat, lon);
             const responses = await fetchWeatherApi("https://api.open-meteo.com/v1/forecast", {
                 latitude: lat,
                 longitude: lon,

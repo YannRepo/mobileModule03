@@ -29,7 +29,7 @@ export default function MySearchBar() {
 
 
   const fetchCity = async (cityName: string) => {
-    console.log("[MySearchBar] fetchCity:", cityName);
+    console.log("[INFO] MySearchBar/fetchCity:", cityName);
     try {
       const res = await fetch(
         `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}&count=5&language=en&format=json`
@@ -44,13 +44,14 @@ export default function MySearchBar() {
         setError("City not found")
       }
     } catch (e: any) {
-      setError(e.message);
+      console.log("[Error] MySearchBar/fetchCity error message:", e);
+      setError("Network error, please try again later.");
       return null;
     }
   };
 
   const fetchCities = async (text: string) => {
-    console.log("[MySearchBar] fetchCities:", text);
+    console.log("[INFO] MySearchBar/fetchCities:", text);
     try {
       const res = await fetch(
         `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(text)}&count=5&language=en&format=json`
@@ -65,20 +66,20 @@ export default function MySearchBar() {
 
     } catch (e) {
       setResults([]);
-      console.log("Error fetching cities list:", e);
+      console.log("[Error] MySearchBar/fetchCities error message:", e);
     }
   };
 
   const debouncedFetch = useCallback(debounce(fetchCities, 400), []);
 
   const handleChange = (text: string) => {
-    console.log("[MySearchBar] handleChange:", text);
+    // console.log("[MySearchBar] handleChange:", text);
     setSearchText(text);
     debouncedFetch(text);
   };
 
   const handleSubmitEditing = async () => {
-    console.log("[MySearchBar] handleSubmitEditing:", searchText);
+    // console.log("[MySearchBar] handleSubmitEditing:", searchText);
     setSearchText("");
     setResults([]);
     debouncedFetch.cancel();
@@ -86,12 +87,23 @@ export default function MySearchBar() {
 
   };
 
+  const handleResearchIcon = () => {
+    fetchCity(searchText);
+    setSearchText("");
+    setResults([]);
+  };
+
+  const handleClearIcon = () => {
+    setSearchText("");
+    setResults([]);
+  };
+
   const handleListSelection = (item: CityResult) => {
-    console.log("[MySearchBar] handleListSelection:", item);
     setSearchText("");
     fetchWeather(item.latitude, item.longitude, item.name, item.admin1, item.country);
     setResults([]);
   };
+
 
   return (
     <View >
@@ -100,9 +112,12 @@ export default function MySearchBar() {
         value={searchText}
         onChangeText={handleChange}
         onSubmitEditing={handleSubmitEditing}
+        onIconPress={handleResearchIcon}
+        onClearIconPress={handleClearIcon}
         inputStyle={styles.searchInput}
-        style={styles.searchInput} // Change color here
+        style={styles.searchInput}
         iconColor={styles.iconColor.color}
+
       />
 
       {results.length > 0 && (
@@ -124,7 +139,7 @@ export default function MySearchBar() {
               onPress={() => { handleListSelection(item) }}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Ionicons name={'chevron-forward-sharp'}  />
+                <Ionicons name={'chevron-forward-sharp'} />
                 <Text style={{ fontWeight: 'bold' }}> {item.name}</Text>
                 <Text>, {item.admin1}, {item.country}</Text>
               </View>
